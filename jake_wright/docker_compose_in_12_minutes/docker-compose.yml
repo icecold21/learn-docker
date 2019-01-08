@@ -1,0 +1,24 @@
+# Docker compose format version
+version: '3'
+
+services: 
+  # name of service
+  product-service:
+    # directory of service folder, relative to docker composer file
+    build: ./product
+    volumes:
+      # mount product folder to /usr/src/app
+      - ./product:/usr/src/app
+    ports:
+      - 5001:80
+  website:
+    # get image directly from docker hub without building, our code will not be in there
+    # we need to bind the volume directly to our container
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports: 
+      - 5000:80
+    depends_on:
+      - product-service
+
