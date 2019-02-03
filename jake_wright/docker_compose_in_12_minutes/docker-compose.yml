@@ -14,7 +14,7 @@ services:
   website:
     # get image directly from docker hub without building, our code will not be in there
     # we need to bind the volume directly to our container
-    image: php:apache
+    image: php:7.3.0-apache-stretch
     volumes:
       - ./website:/var/www/html
     ports: 
