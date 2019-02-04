@@ -10,7 +10,8 @@ const client = redis.createClient({
 
 client.set('visits', 0);
 app.get('/', (req, res) => {
-  process.exit(1);
+  // process.exit(1); use this to simulate restart policy on failure
+  process.exit(0); // on failure will not restart this exit because it means completed successfully.
   client.get('visits', (err, visits) => {
     res.send('Number of visits is ' + visits);
     client.set('visits', parseInt(visits) + 1);
