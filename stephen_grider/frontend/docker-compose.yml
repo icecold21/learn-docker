@@ -1,0 +1,14 @@
+# docker compose up
+version: '3'
+services: 
+  web:
+    # default dockerfile name
+    build: 
+      # set the context to the current folder, happens that our project is flat
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /app/node_modules
+      - .:/app
