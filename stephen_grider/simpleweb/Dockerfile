@@ -5,10 +5,9 @@ FROM node:alpine
 WORKDIR /usr/app
 
 # Put package.json and index.js to the image
-COPY ./ ./
-
-# Run
+COPY ./package.json ./
 RUN npm install
+COPY ./ ./
 
 # Initscript
 CMD ["npm", "start"]
