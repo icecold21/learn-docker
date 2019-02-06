@@ -1,0 +1,11 @@
+# travis needs sudo to run docker
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t jonathan/docker-react -f Dockerfile.dev .
+
+script:
+  - docker run jonathan/docker-react npm run test -- --coverage 
+
