@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  redis: 
+    image: 'redis:latest'
+  server:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes: 
+      - /app/node_modules # dont override this folder, because we don't have node modules in local machine
+      - ./server:/app
+    environment:
+      # set on runtime
+      - REDIS_HOST=redis # taken from services name
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
+
