@@ -41,4 +41,8 @@ services:
     volumes:
       - /app/node_modules # bookmarks node modules
       - ./worker:/app
+    environment:
+      # set on runtime
+      - REDIS_HOST=redis # taken from services name
+      - REDIS_PORT=6379
 
