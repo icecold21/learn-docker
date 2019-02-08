@@ -2,25 +2,24 @@ version: '3'
 services:
   postgres:
     image: 'postgres:latest'
-  redis: 
+  redis:
     image: 'redis:latest'
   nginx:
     restart: always
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
-    ports: 
+    ports:
       - '3050:80'
   api:
-    build: 
+    build:
       dockerfile: Dockerfile.dev
       context: ./server
-    volumes: 
-      - /app/node_modules # dont override this folder, because we don't have node modules in local machine
+    volumes:
+      - /app/node_modules
       - ./server:/app
     environment:
-      # set on runtime
-      - REDIS_HOST=redis # taken from services name
+      - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PGUSER=postgres
       - PGHOST=postgres
@@ -32,17 +31,15 @@ services:
       dockerfile: Dockerfile.dev
       context: ./client
     volumes:
-      - /app/node_modules # bookmarks node modules
+      - /app/node_modules
       - ./client:/app
   worker:
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     build:
-      dockerfile: Dockerfile.dev 
+      dockerfile: Dockerfile.dev
       context: ./worker
     volumes:
-      - /app/node_modules # bookmarks node modules
+      - /app/node_modules
       - ./worker:/app
-    environment:
-      # set on runtime
-      - REDIS_HOST=redis # taken from services name
-      - REDIS_PORT=6379
-
