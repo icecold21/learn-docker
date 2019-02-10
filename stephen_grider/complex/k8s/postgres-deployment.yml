@@ -28,3 +28,11 @@ spec:
               mountPath: /var/lib/postgresql/data
               # subpath: any data stored in /var/lib/postgresql/data will be stored in postgres directory inside the volume
               subPath: postgres
+          env:
+            # kubectl create secret generic pgpassword --from-literal PGPASSWORD=12345asdf
+            - name: PGPASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  # secret object name
+                  name: pgpassword
+                  key: PGPASSWORD
